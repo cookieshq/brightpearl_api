@@ -44,6 +44,8 @@ module BrightpearlApi
         response = HTTParty.post(uri, options)
       elsif type == :put
         response = HTTParty.put(uri, options)
+      elsif type == :patch
+        response = HTTParty.patch(uri, options)
       elsif type == :options
         http = Curl.options(uri) do|http|
           http.headers = options[:headers]
