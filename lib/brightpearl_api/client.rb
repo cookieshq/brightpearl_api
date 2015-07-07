@@ -30,6 +30,16 @@ module BrightpearlApi
       token = authenticate
 
       uri = configuration.uri(path)
+      if type == :patch
+      options = {
+        :headers => {
+          'Content-Type' => 'application/json',
+          'Accept' => 'json',
+          'brightpearl-auth' => token
+        },
+        :body => "[#{data.to_json}]"
+      }
+      else
       options = {
         :headers => {
           'Content-Type' => 'application/json',
@@ -37,10 +47,8 @@ module BrightpearlApi
           'brightpearl-auth' => token
         },
         :body => data.to_json
-        if type == :patch
-          :body => "[#{data.to_json}]"
-        end
       }
+      end
       if type == :get
         response = HTTParty.get(uri, options)
       elsif type == :post
