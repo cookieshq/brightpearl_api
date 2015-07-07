@@ -37,6 +37,9 @@ module BrightpearlApi
           'brightpearl-auth' => token
         },
         :body => data.to_json
+        if type == :patch
+          :body => "[#{data.to_json}]"
+        end
       }
       if type == :get
         response = HTTParty.get(uri, options)
