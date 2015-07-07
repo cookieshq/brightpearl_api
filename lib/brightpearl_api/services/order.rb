@@ -41,7 +41,7 @@ module BrightpearlApi
           def update_order_custom_field(order_id) #Not updating from bundle
             body = {}
             yield(body)
-            call(:put, "/order-service/order/#{order_id.to_i}/custom-field", body)
+            call(:post, "/order-service/order/#{order_id.to_i}/custom-field", body)
           end
         end
       end
