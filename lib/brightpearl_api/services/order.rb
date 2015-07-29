@@ -10,6 +10,10 @@ module BrightpearlApi
             call(:put, "/order-service/order/#{order_id.to_i}/acknowledgement", body)
           end
 
+          def get_order_custom_field(order_id)
+            call(:get, "/order-service/order/#{order_id.to_i}/custom_field")
+          end
+
           def create_order_note(order_id)
             body = {}
             yield(body)
@@ -43,6 +47,7 @@ module BrightpearlApi
             yield(body)
             call(:patch, "/order-service/order/#{order_id.to_i}/custom-field", body)
           end
+          
           def update_order(order_id)
             body = {}
             yield(body)
