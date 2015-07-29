@@ -43,6 +43,11 @@ module BrightpearlApi
             yield(body)
             call(:patch, "/order-service/order/#{order_id.to_i}/custom-field", body)
           end
+          def update_order(order_id)
+            body = {}
+            yield(body)
+            call(:patch, "/order-service/order/#{order_id.to_i}", body)
+          end
         end
       end
     end
