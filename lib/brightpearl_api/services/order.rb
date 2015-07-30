@@ -11,7 +11,7 @@ module BrightpearlApi
           end
 
           def get_order_custom_field(order_id)
-            call(:get, "/order-service/order/#{order_id.to_i}/custom_field")
+            call(:get, "/order-service/order/#{order_id.to_i}/custom-field")
           end
 
           def create_order_note(order_id)
