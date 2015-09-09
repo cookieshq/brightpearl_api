@@ -4,7 +4,7 @@ module BrightpearlApi
   class Configuration
     include Singleton
 
-    attr_accessor :email, :password, :version, :datacenter, :account
+    attr_accessor :email, :password, :version, :datacenter, :account, :apptoken
 
     def self.instance
       @@instance ||= new
@@ -16,6 +16,7 @@ module BrightpearlApi
       @version = default_version
       @datacenter = default_datacenter
       @account = default_account
+      @apptoken = default_apptoken
       args.each_pair do |option, value|
         self.send("#{option}=", value)
       end
@@ -23,7 +24,7 @@ module BrightpearlApi
 
     def valid?
       result = true
-      [:email, :password, :version, :datacenter, :account].each do |value|
+      [:email, :password, :version, :datacenter, :account, :apptoken].each do |value|
         result = false if self.send(value).blank?
       end
       result
@@ -56,6 +57,10 @@ module BrightpearlApi
 
     def default_account
       ENV['BRIGHTPEARL_ACCOUNT']
+    end
+
+    def default_apptoken
+      ENV['BRIGHTPEARL_APPTOKEN']
     end
   end
 end
