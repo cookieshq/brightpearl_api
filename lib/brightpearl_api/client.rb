@@ -78,6 +78,7 @@ module BrightpearlApi
           'Accept' => 'json'
         },
         :body => {
+          'brightpearl-app-ref' => configuration.apptoken,
           :apiAccountCredentials => {
             :emailAddress => configuration.email,
             :password => configuration.password
