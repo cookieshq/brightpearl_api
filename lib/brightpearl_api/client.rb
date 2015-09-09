@@ -79,7 +79,7 @@ module BrightpearlApi
         :headers => {
           'Content-Type' => 'application/json',
           'Accept' => 'json',
-          'brightpearl-app-ref' => configuration.appref,
+          'brightpearl-staff-ref' => configuration.appref,
           'brightpearl-account-token' => configuration.apptoken
         },
         :body => {
