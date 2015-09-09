@@ -34,7 +34,8 @@ module BrightpearlApi
       options = {
         :headers => {
           'Content-Type' => 'application/json',
-          'brightpearl-app-ref' => configuration.apptoken,
+          'brightpearl-app-ref' => configuration.appref,
+          'brightpearl-staff-token' => configuration.apptoken,
           'Accept' => 'json',
           'brightpearl-auth' => token
         },
@@ -79,6 +80,7 @@ module BrightpearlApi
         },
         :body => {
           'brightpearl-app-ref' => configuration.apptoken,
+          'brightpearl-staff-token' => configuration.apptoken,
           :apiAccountCredentials => {
             :emailAddress => configuration.email,
             :password => configuration.password
