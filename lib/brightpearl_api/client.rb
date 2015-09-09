@@ -36,7 +36,7 @@ module BrightpearlApi
           'Content-Type' => 'application/json',
           'brightpearl-app-ref' => configuration.appref,
           'Accept' => 'json',
-          'brightpearl-auth' => token
+          'brightpearl-staff-token' => token
         },
         :body => "[#{data.to_json}]"
       }
@@ -46,7 +46,7 @@ module BrightpearlApi
           'Content-Type' => 'application/json',
           'brightpearl-app-ref' => configuration.appref,
           'Accept' => 'json',
-          'brightpearl-auth' => token
+          'brightpearl-staff-token' => token
         },
         :body => data.to_json
       }
