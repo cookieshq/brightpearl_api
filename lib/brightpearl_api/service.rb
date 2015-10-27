@@ -74,7 +74,7 @@ module BrightpearlApi
       results_returned = 0
       results_available = 1
       while results_returned < results_available
-        response = call(:get, "/#{service}/#{resource}-search?#{body.to_query}")
+        response = call(:get, "/#{service}-service/#{resource}-search?#{body.to_query}")
         results_returned += response['metaData']['resultsReturned']
         results_available = response['metaData']['resultsAvailable']
         body[:firstResult] = results_returned + 1
