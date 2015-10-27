@@ -27,14 +27,15 @@ module BrightpearlApi
     end
 
     def api_call(type, path, data = {})
-      token = authenticate
+      # token = authenticate
 
       uri = configuration.uri(path)
       options = {
         :headers => {
           'Content-Type' => 'application/json',
           'Accept' => 'json',
-          'brightpearl-auth' => token
+          'brightpearl-app-ref' => configuration.app_ref,
+          'brightpearl-account-token' => configuration.account_token
         },
         :body => data.to_json
       }
@@ -56,24 +57,24 @@ module BrightpearlApi
       return response["response"]
     end
 
-    def authenticate
-      return @@token unless @@token.blank?
-      options = {
-        :headers => {
-          'Content-Type' => 'application/json',
-          'Accept' => 'json'
-        },
-        :body => {
-          :apiAccountCredentials => {
-            :emailAddress => configuration.email,
-            :password => configuration.password
-          }
-        }.to_json
-      }
-      response = HTTParty.post(configuration.auth_uri, options)
-      check_response(response)
-      @@token = response["response"]
-    end
+    # def authenticate
+    #   return @@token unless @@token.blank?
+    #   options = {
+    #     :headers => {
+    #       'Content-Type' => 'application/json',
+    #       'Accept' => 'json'
+    #     },
+    #     :body => {
+    #       :apiAccountCredentials => {
+    #         :emailAddress => configuration.email,
+    #         :password => configuration.password
+    #       }
+    #     }.to_json
+    #   }
+    #   response = HTTParty.post(configuration.auth_uri, options)
+    #   check_response(response)
+    #   @@token = response["response"]
+    # end
 
     def reset_token
       @@token = false
