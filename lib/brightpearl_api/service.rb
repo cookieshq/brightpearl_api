@@ -37,12 +37,12 @@ module BrightpearlApi
       call(:post, "/#{service}-service/#{resource}/", body)
     end
 
-    def get_resource(service, resource, idset = nil)
+    def get_resource(service, resource, idset = nil, includeOptional = [])
       if !idset.nil?
         id_set = parse_idset(idset)
-        call(:get, "/#{service}-service/#{resource}/#{id_set}")
+        call(:get, "/#{service}-service/#{resource}/#{id_set}?includeOptional=#{includeOptional.join(',')}")
       else
-        call(:get, "/#{service}-service/#{resource}")
+        call(:get, "/#{service}-service/#{resource}?includeOptional=#{includeOptional.join(',')}")
       end
     end
 
