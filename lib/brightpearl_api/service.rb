@@ -24,7 +24,7 @@ module BrightpearlApi
       when Range
         id_set = "#{idset.min.to_i}-#{idset.max.to_i}"
       when Array
-        id_set = idset.collect{ |x| x.to_i }.join(',')
+        id_set = idset.map(&:to_i).join('.')
       else
         id_set = idset
       end
@@ -56,6 +56,7 @@ module BrightpearlApi
       call(:delete, "/#{service}-service/#{resource}/#{resource_id.to_i}")
     end
 
+    # returns a set of URIs you'd need to call if you would like to retrieve a large set of resources
     def get_resource_range(service, resource, idset = nil)
       if !idset.nil?
         id_set = parse_idset(idset)
