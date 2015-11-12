@@ -31,10 +31,15 @@ module BrightpearlApi
       id_set
     end
 
-    def create_resource(service, resource)
+    def create_resource(service, resource, resource_id=nil, path=nil)
       body = {}
       yield(body)
-      call(:post, "/#{service}-service/#{resource}/", body)
+      puts body.inspect
+      if !resource_id.nil?
+        call(:post, "/#{service}-service/#{resource}/#{resource_id.to_i}/#{path}", body)
+      else
+        call(:post, "/#{service}-service/#{resource}/#{path}", body)
+      end
     end
 
     def get_resource(service, resource, idset = nil, includeOptional = [])
