@@ -7,7 +7,7 @@ module BrightpearlApi
             body = {
               reference: "#{reference}"
             }
-            call(:put, "/order-service/order/#{order_id.to_i}/acknowledgement", body)
+            call(:patch, "/order-service/order/#{order_id.to_i}/acknowledgement", body)
           end
 
           def create_order_note(order_id)
@@ -29,19 +29,19 @@ module BrightpearlApi
           def update_order_row(order_id, row_id)
             body = {}
             yield(body)
-            call(:put, "/order-service/order/#{order_id.to_i}/row/#{row_id.to_i}", body)
+            call(:patch, "/order-service/order/#{order_id.to_i}/row/#{row_id.to_i}", body)
           end
 
           def update_order_status(order_id)
             body = {}
             yield(body)
-            call(:put, "/order-service/order/#{order_id.to_i}/status", body)
+            call(:patch, "/order-service/order/#{order_id.to_i}/status", body)
           end
           
           def update_order_custom_field(order_id)
             body = {}
             yield(body)
-            call(:put, "/order-service/order/#{order_id.to_i}/custom-field", body)
+            call(:patch, "/order-service/order/#{order_id.to_i}/custom-field", body)
           end
         end
       end

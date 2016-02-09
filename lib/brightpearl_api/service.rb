@@ -54,7 +54,7 @@ module BrightpearlApi
     def update_resource(service, resource, resource_id)
       body = {}
       yield(body)
-      call(:put, "/#{service}-service/#{resource}/#{resource_id.to_i}", body)
+      call(:patch, "/#{service}-service/#{resource}/#{resource_id.to_i}", body)
     end
 
     def delete_resource(service, resource, resource_id)

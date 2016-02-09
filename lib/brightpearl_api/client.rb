@@ -39,42 +39,22 @@ module BrightpearlApi
         },
         :body => data.to_json
       }
-      if type == :get
-        response = HTTParty.get(uri, options)
-      elsif type == :post
-        response = HTTParty.post(uri, options)
-      elsif type == :put
-        response = HTTParty.put(uri, options)
-      elsif type == :options
+      
+      response = case type
+      when :get, :post, :put, :patch, :delete
+        HTTParty.send(type, uri, options)
+      when :options
         http = Curl.options(uri) do|http|
           http.headers = options[:headers]
         end
-        response = JSON.parse(http.body_str)
-      elsif type == :delete
-        response = HTTParty.delete(uri, options)
+        JSON.parse(http.body_str)
       end
+      raise BrightpearlException, "API Call type #{type} not supported" unless response
+
       check_response(response)
       return response["response"]
-    end
 
-    # def authenticate
-    #   return @@token unless @@token.blank?
-    #   options = {
-    #     :headers => {
-    #       'Content-Type' => 'application/json',
-    #       'Accept' => 'json'
-    #     },
-    #     :body => {
-    #       :apiAccountCredentials => {
-    #         :emailAddress => configuration.email,
-    #         :password => configuration.password
-    #       }
-    #     }.to_json
-    #   }
-    #   response = HTTParty.post(configuration.auth_uri, options)
-    #   check_response(response)
-    #   @@token = response["response"]
-    # end
+    end
 
     def reset_token
       @@token = false

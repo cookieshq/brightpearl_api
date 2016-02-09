@@ -91,7 +91,7 @@ module BrightpearlApi
           def update_goods_out_note(goods_out_note_id)
             body = {}
             yield(body)
-            call(:put, "/warehouse-service/goods-note/goods-out/#{goods_out_note_id.to_i}", body)
+            call(:patch, "/warehouse-service/goods-note/goods-out/#{goods_out_note_id.to_i}", body)
           end
 
           def create_goods_out_note_event(goods_out_note_id)
