@@ -22,11 +22,7 @@ module BrightpearlApi
     end
 
     def valid?
-      result = true
-      [:datacenter, :account, :app_ref, :account_token].each do |value|
-        result = false if self.send(value).blank?
-      end
-      result
+      [:datacenter, :account, :app_ref, :account_token].all? { |v| !self.send(v).blank? }
     end
 
     def uri(path)

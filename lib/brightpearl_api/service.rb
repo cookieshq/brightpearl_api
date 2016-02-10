@@ -10,12 +10,20 @@ module BrightpearlApi
     include Product
     include Warehouse
 
+    include Singleton
+
     def initialize
       raise BrightpearlException, "Configuration is invalid" unless Configuration.instance.valid?
     end
 
     def call(type, path, data = {})
       Client.instance.call(type, path, data)
+    end
+    
+    [:get, :post, :put, :patch, :delete, :options].each do |m|
+      define_method(m) do |url, data = {}|
+        call(m, url, data)
+      end
     end
 
     def parse_idset(idset)
@@ -36,38 +44,38 @@ module BrightpearlApi
       yield(body)
       puts body.inspect
       if !resource_id.nil?
-        call(:post, "/#{service}-service/#{resource}/#{resource_id.to_i}/#{path}", body)
+        post("/#{service}-service/#{resource}/#{resource_id.to_i}/#{path}", body)
       else
-        call(:post, "/#{service}-service/#{resource}/#{path}", body)
+        post("/#{service}-service/#{resource}/#{path}", body)
       end
     end
 
     def get_resource(service, resource, idset = nil, includeOptional = [])
       if !idset.nil?
         id_set = parse_idset(idset)
-        call(:get, "/#{service}-service/#{resource}/#{id_set}?includeOptional=#{includeOptional.join(',')}")
+        get("/#{service}-service/#{resource}/#{id_set}?includeOptional=#{includeOptional.join(',')}")
       else
-        call(:get, "/#{service}-service/#{resource}?includeOptional=#{includeOptional.join(',')}")
+        get("/#{service}-service/#{resource}?includeOptional=#{includeOptional.join(',')}")
       end
     end
 
     def update_resource(service, resource, resource_id)
       body = {}
       yield(body)
-      call(:patch, "/#{service}-service/#{resource}/#{resource_id.to_i}", body)
+      patch("/#{service}-service/#{resource}/#{resource_id.to_i}", body)
     end
 
     def delete_resource(service, resource, resource_id)
-      call(:delete, "/#{service}-service/#{resource}/#{resource_id.to_i}")
+      delete("/#{service}-service/#{resource}/#{resource_id.to_i}")
     end
 
     # returns a set of URIs you'd need to call if you would like to retrieve a large set of resources
     def get_resource_range(service, resource, idset = nil)
       if !idset.nil?
         id_set = parse_idset(idset)
-        call(:options, "/#{service}-service/#{resource}/#{id_set}")
+        options("/#{service}-service/#{resource}/#{id_set}")
       else
-        call(:options, "/#{service}-service/#{resource}")
+        options("/#{service}-service/#{resource}")
       end
     end
 
@@ -80,7 +88,7 @@ module BrightpearlApi
       results_returned = 0
       results_available = 1
       while results_returned < results_available
-        response = call(:get, "/#{service}-service/#{resource}-search?#{body.to_query}")
+        response = get("/#{service}-service/#{resource}-search?#{body.to_query}")
         results_returned += response['metaData']['resultsReturned']
         results_available = response['metaData']['resultsAvailable']
         body[:firstResult] = results_returned + 1
@@ -99,7 +107,7 @@ module BrightpearlApi
     def multi_message
       body = {}
       yield(body)
-      call(:post, "/multi-message", body)
+      post("/multi-message", body)
     end
   end
 end

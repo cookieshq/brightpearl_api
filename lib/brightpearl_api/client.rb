@@ -8,9 +8,9 @@ module BrightpearlApi
 
     @@token = false
 
-    def self.instance
-      @@instance ||= new
-    end
+    # def self.instance
+    #   @@instance ||= new
+    # end
 
     def call(type, path, data = {})
       api_call(type, path, data)
@@ -25,7 +25,7 @@ module BrightpearlApi
       sleep(1.seconds)
       api_call(type, path, data)
     end
-
+    
     def api_call(type, path, data = {})
       # token = authenticate
 
