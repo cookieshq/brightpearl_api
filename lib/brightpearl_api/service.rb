@@ -19,7 +19,15 @@ module BrightpearlApi
     def call(type, path, data = {})
       Client.instance.call(type, path, data)
     end
-    
+
+    def requests_remaining
+      Client.instance.requests_remaining
+    end
+
+    def next_throttle_period
+      Client.instance.next_throttle_period
+    end
+
     [:get, :post, :put, :patch, :delete, :options].each do |m|
       define_method(m) do |url, data = {}|
         call(m, url, data)
