@@ -25,5 +25,5 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "activesupport"
   spec.add_runtime_dependency "httparty"
-  spec.add_runtime_dependency "curb"
+  spec.add_runtime_dependency "curb", "0.9.10"
 end
