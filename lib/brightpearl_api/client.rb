@@ -36,7 +36,7 @@ module BrightpearlApi
       options = {
         headers: {
           'Content-Type' => 'application/json',
-          'Accept' => 'json',
+          'Accept' => 'application/json',
           'brightpearl-app-ref' => configuration.app_ref,
           'brightpearl-account-token' => configuration.account_token
         },
